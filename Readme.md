@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Natalie Raevskaya](https://up.htmlacademy.ru/javascript/28/user/2058165).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Мастеров](https://htmlacademy.ru/profile/id912463).
 
 ---
 
