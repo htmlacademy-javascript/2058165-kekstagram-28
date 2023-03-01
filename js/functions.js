@@ -1,6 +1,6 @@
 // Функция для проверки длины строки.
 
-const checkStringLength = (string, length) => (string.length <= length);
+const checkStringLength = (string, length) => string.length <= length;
 
 // Функция для проверки, является ли строка палиндромом.
 
@@ -33,7 +33,7 @@ const getNumber = (string) => {
 
 // Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами — и возвращает исходную строку, дополненную указанными символами до заданной длины.
 
-const notPadStart = (string, minLength, pad) => {
+const createPadStart = (string, minLength, pad) => {
 
   while (minLength > string.length) {
     const srtingWithPad = string.length + pad.length;
