@@ -1,6 +1,6 @@
 import {getRandomInteger, getRandomArrayElement, createRandomIdFromRangeGenerator} from './util.js';
 
-const PHOTO_DESCRIPTIONS_COUNT = 25;
+const PICTURE_DESCRIPTIONS_COUNT = 25;
 const LIKES_COUNT_MIN = 15;
 const LIKES_COUNT_MAX = 200;
 const AVATAR_COUNT_MIN = 1;
@@ -62,7 +62,7 @@ const DESCRIPTIONS = [
   'Разум бессилен перед криком сердца.',
 ];
 
-const generatePhotoId = createRandomIdFromRangeGenerator(FOTO_ID_MIN, FOTO_ID_MAX);
+const generatePictureId = createRandomIdFromRangeGenerator(FOTO_ID_MIN, FOTO_ID_MAX);
 const generateCommentId = createRandomIdFromRangeGenerator(COMMENT_ID_MIN, COMMENT_ID_MAX);
 const generateUrlId = createRandomIdFromRangeGenerator(URL_ID_MIN, URL_ID_MAX);
 
@@ -77,14 +77,14 @@ const createComment = () => ({
 
 const createCommentsArray = () => Array.from({length: getRandomInteger(commentRange.MIN, commentRange.MAX)}, createComment);
 
-const createPhotoDescription = () => ({
-  id: generatePhotoId(),
-  url: `photos/${generateUrlId()}.jpg`,
+const createPictureDescription = () => ({
+  id: generatePictureId(),
+  url: `pictures/${generateUrlId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKES_COUNT_MIN, LIKES_COUNT_MAX),
   comments: createCommentsArray(),
 });
 
-const createPhotoDescriptions = () => Array.from({length: PHOTO_DESCRIPTIONS_COUNT}, createPhotoDescription);
+const createPictureDescriptions = () => Array.from({length: PICTURE_DESCRIPTIONS_COUNT}, createPictureDescription);
 
-export {createPhotoDescriptions};
+export {createPictureDescriptions};
