@@ -1,26 +1,23 @@
-import {createPhotoDescriptions} from './data.js';
-
 const pictureContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const pictureDescriptions = createPhotoDescriptions();
+const createThumbnail = (photo) => {
+  const { id, url, description, likes, comments } = photo;
+  const thumbnailItem = pictureTemplate.cloneNode(true);
+  const thumbnailItemPicture = thumbnailItem.querySelector('.picture__img');
+  thumbnailItemPicture.index = id;
+  thumbnailItemPicture.src = url;
+  thumbnailItemPicture.alt = description;
+  thumbnailItem.querySelector('.picture__likes').textContent = likes;
+  thumbnailItem.querySelector('.picture__comments').textContent = comments.length;
+  return thumbnailItem;
+};
 
-const pictureListFragment = document.createDocumentFragment();
-
-const renderThumbnails = () => {
-
-  pictureDescriptions.forEach((photo) => {
-    const thumbnailElement = pictureTemplate.cloneNode(true);
-    thumbnailElement.querySelector('.picture__img').index = photo.id;
-    thumbnailElement.querySelector('.picture__img').src = photo.url;
-    thumbnailElement.querySelector('.picture__img').alt = photo.description;
-    thumbnailElement.querySelector('.picture__likes').textContent = photo.likes;
-    thumbnailElement.querySelector('.picture__comments').textContent = photo.comments.length;
-    pictureListFragment.append(thumbnailElement);
-  });
-
+const renderThumbnails = (items) => {
+  const pictureListFragment = document.createDocumentFragment();
+  items.forEach((photo) => pictureListFragment.append(createThumbnail(photo)));
   pictureContainer.append(pictureListFragment);
 };
 
