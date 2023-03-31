@@ -1,30 +1,47 @@
-// const MAX_HASHTAG_COUNT = 5;
-// const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_HASHTAG_COUNT = 5;
+const VALID_HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const photoUploadForm = document.querySelector('.img-upload__form');
 const hashtagField = photoUploadForm.querySelector('.text__hashtags');
 
-const pristine = new Pristine (photoUploadForm, {
+const pristine = new window.Pristine (photoUploadForm, {
   classTo: 'img-upload__field-wrapper',
+  errorClass: 'form-validation__parent--error',
+  successClass: 'form-validation__parent--success',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper__error',
+  errorTextTag: 'div',
+  errorTextClass: 'form-validation__text-error'
 });
 
-const validateTags = (value) => {
-  const tags = value
-    .trim()
-    .split(' ')
-    .filter((tag) => tag.trim().length);
-  return tags;
-};
+const isValidHashtag = (hashtag) => VALID_HASHTAG_REGEXP.test(hashtag);
 
-const isValidTagSymbols = () => {};
+const isUniqueHashtags = (hashtags) => new Set(hashtags).size === hashtags.length;
 
-const isValidTagCount = () => {};
+const parseHashtagInput = (value) => value
+  .split(' ')
+  .filter((hashtag) => hashtag.trim() !== '');
 
-const isUniqueTag = () => {};
+pristine.addValidator(hashtagField, (value) => {
+  const hashtags = parseHashtagInput(value);
 
+  return isUniqueHashtags(hashtags);
+}, 'Один и тот же хэш-тег не может быть использован дважды', 1);
 
-// pristine.addValidator(hashtagField, isValidTagSymbols, 'неверный хэш-тег');
-// pristine.addValidator(hashtagField, isValidTagCount, '');
-// pristine.addValidator(hashtagField, isUniqueTag, '');
+pristine.addValidator(hashtagField, (value) => {
+  const hashtags = parseHashtagInput(value);
+
+  return hashtags.every(isValidHashtag);
+}, 'Хэш-тег должен начинаться с #, не может состоять только из одной решётки, содержать пробелы, спецсимволы и символы пунктуации', 2);
+
+pristine.addValidator(hashtagField, (value) => {
+  const hashtags = parseHashtagInput(value);
+
+  return hashtags.length < MAX_HASHTAG_COUNT;
+}, 'Нельзя указать больше пяти хэш-тегов', 3);
+
+photoUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  console.log(isValid);
+});

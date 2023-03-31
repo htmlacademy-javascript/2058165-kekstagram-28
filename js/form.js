@@ -8,6 +8,7 @@ const hashtagField = photoUploadForm.querySelector('.text__hashtags');
 const commentField = photoUploadForm.querySelector('.text__description');
 
 const closeUploadForm = () => {
+  photoUploadForm.reset();
   resetScale();
   photoEditForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -23,6 +24,7 @@ const onDocumentKeydown = (evt) => {
 };
 
 const openUploadForm = () => {
+  resetScale();
   photoEditForm.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
