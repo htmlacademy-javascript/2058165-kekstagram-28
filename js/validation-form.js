@@ -41,9 +41,9 @@ pristine.addValidator(hashtagField, (value) => {
 
 const resetPristine = () => pristine.reset();
 
-const isValid = () => pristine.validate();
+const validatePristine = () => pristine.validate();
 
-export { resetPristine, isValid };
+export { resetPristine, validatePristine };
 
 // photoUploadForm.addEventListener('submit', (evt) => {
 //   evt.preventDefault();

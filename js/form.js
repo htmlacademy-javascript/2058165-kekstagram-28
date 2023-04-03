@@ -33,7 +33,7 @@ function onCancelFormButtonClick (evt) {
   closeUploadForm();
 }
 
-const onOpenPhotoUploadForm = () => openPhotoUploadForm();
+const onPhotoUploadButton = () => openPhotoUploadForm();
 
 const isTextFieldFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
 
@@ -44,6 +44,6 @@ function onDocumentKeydown (evt) {
   }
 }
 
-photoUploadButton.addEventListener('change', onOpenPhotoUploadForm);
+photoUploadButton.addEventListener('change', onPhotoUploadButton);
 
 cancelFormButton.addEventListener('click', onCancelFormButtonClick);

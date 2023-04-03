@@ -9,13 +9,13 @@ const imagePreview = document.querySelector('.img-upload__preview img');
 const effects = document.querySelector('.effects');
 const effectLevel = document.querySelector('.effect-level__value');
 
-const isDefault = () => currentEffect === DEFAULT_EFFECT;
+const isDefaultEffect = () => currentEffect === DEFAULT_EFFECT;
 
 const showSlider = () => sliderContainer.classList.remove('hidden');
 
 const hideSlider = () => sliderContainer.classList.add('hidden');
 
-const sliderUpdate = () => {
+const updateSlider = () => {
   slider.noUiSlider.updateOptions({
     range: {
       min: currentEffect.min,
@@ -33,17 +33,17 @@ const onEffectsChange = (evt) => {
   currentEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
   imagePreview.className = `effects__preview--${currentEffect.name}`;
 
-  if (evt.target.value === 'none') {
+  if (isDefaultEffect()) {
     hideSlider();
   } else {
     showSlider();
   }
-  sliderUpdate();
+  updateSlider();
 };
 
-const onSliderUpdate = () => {
+const onUpdateSlider = () => {
   const sliderValue = slider.noUiSlider.get();
-  if (isDefault()) {
+  if (isDefaultEffect()) {
     imagePreview.style.filter = DEFAULT_EFFECT.style;
   } else {
     imagePreview.style.filter = `${currentEffect.style}(${sliderValue}${currentEffect.unit})`;
@@ -63,11 +63,11 @@ noUiSlider.create(slider, {
 hideSlider();
 
 effects.addEventListener('change', onEffectsChange);
-slider.noUiSlider.on('update', onSliderUpdate);
+slider.noUiSlider.on('update', onUpdateSlider);
 
 const resetEffects = () => {
   currentEffect = DEFAULT_EFFECT;
-  sliderUpdate();
+  updateSlider();
 };
 
 export { resetEffects };
