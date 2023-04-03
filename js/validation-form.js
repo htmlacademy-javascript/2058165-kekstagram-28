@@ -39,9 +39,15 @@ pristine.addValidator(hashtagField, (value) => {
   return hashtags.length < MAX_HASHTAG_COUNT;
 }, 'Нельзя указать больше пяти хэш-тегов', 3);
 
-photoUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const resetPristine = () => pristine.reset();
 
-  const isValid = pristine.validate();
-  console.log(isValid);
-});
+const isValid = () => pristine.validate();
+
+export { resetPristine, isValid };
+
+// photoUploadForm.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+
+//   const isValid = pristine.validate();
+//   console.log(isValid);
+// });
