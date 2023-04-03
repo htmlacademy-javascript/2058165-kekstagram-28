@@ -13,7 +13,7 @@ const scalePhoto = (value) => {
   scaleInput.value = `${value}%`;
 };
 
-const onsmallerButtonClick = () => {
+const onSmallerButtonClick = () => {
   const currentValue = parseInt(scaleInput.value, 10);
   let newValue = currentValue - SCALE_STEP;
   if (newValue < MIN_SCALE) {
@@ -22,9 +22,9 @@ const onsmallerButtonClick = () => {
   scalePhoto(newValue);
 };
 
-smallerButton.addEventListener('click', onsmallerButtonClick);
+smallerButton.addEventListener('click', onSmallerButtonClick);
 
-const onbiggerButtonClick = () => {
+const onBiggerButtonClick = () => {
   const currentValue = parseInt(scaleInput.value, 10);
   let newValue = currentValue + SCALE_STEP;
   if (newValue > MAX_SCALE) {
@@ -33,7 +33,7 @@ const onbiggerButtonClick = () => {
   scalePhoto(newValue);
 };
 
-biggerButton.addEventListener('click', onbiggerButtonClick);
+biggerButton.addEventListener('click', onBiggerButtonClick);
 
 const resetScale = () => scalePhoto(DEFAULT_SCALE);
 
