@@ -1,8 +1,17 @@
+import { sendData } from './api.js';
+import { showAlert } from './util.js';
+
 const MAX_HASHTAG_COUNT = 5;
 const VALID_HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
 const photoUploadForm = document.querySelector('.img-upload__form');
 const hashtagField = photoUploadForm.querySelector('.text__hashtags');
+const submitButton = photoUploadForm.querySelector('.img-upload__submit');
 
 const pristine = new window.Pristine (photoUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -41,13 +50,31 @@ pristine.addValidator(hashtagField, (value) => {
 
 const resetPristine = () => pristine.reset();
 
-const validatePristine = () => pristine.validate();
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
 
-export { resetPristine, validatePristine };
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
-// photoUploadForm.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
+const setPhotoUploadFormSubmit = (onSuccess) => {
+  photoUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-//   const isValid = pristine.validate();
-//   console.log(isValid);
-// });
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch((err) => {
+          showAlert(err.message);
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+export { setPhotoUploadFormSubmit, resetPristine };

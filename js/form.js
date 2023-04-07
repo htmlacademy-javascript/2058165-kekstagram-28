@@ -17,7 +17,7 @@ const openPhotoUploadForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const closeUploadForm = () => {
+const closePhotoUploadForm = () => {
   photoUploadForm.reset();
   resetPristine();
   resetScale();
@@ -30,20 +30,22 @@ const closeUploadForm = () => {
 
 function onCancelFormButtonClick (evt) {
   evt.preventDefault();
-  closeUploadForm();
+  closePhotoUploadForm();
 }
 
-const onPhotoUploadButton = () => openPhotoUploadForm();
+const onPhotoUploadButtonChange = () => openPhotoUploadForm();
 
 const isTextFieldFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
 
 function onDocumentKeydown (evt) {
   if (isEscape(evt) && !isTextFieldFocused()) {
     evt.preventDefault();
-    closeUploadForm();
+    closePhotoUploadForm();
   }
 }
 
-photoUploadButton.addEventListener('change', onPhotoUploadButton);
+photoUploadButton.addEventListener('change', onPhotoUploadButtonChange);
 
 cancelFormButton.addEventListener('click', onCancelFormButtonClick);
+
+export { closePhotoUploadForm };
