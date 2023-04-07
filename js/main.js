@@ -1,8 +1,15 @@
-import {createPhotoDescriptions} from './data.js';
-import {renderThumbnails} from './thumbnails.js';
-import './form.js';
-import './validation-form.js';
-import './scale.js';
+import { closePhotoUploadForm } from './form.js';
+import { setPhotoUploadFormSubmit } from './validation-form.js';
+import { renderThumbnails } from './thumbnails.js';
+import { getData } from './api.js';
+import { showAlert } from './util.js';
 
-const photos = createPhotoDescriptions();
-renderThumbnails(photos);
+getData()
+  .then((photos) => {
+    renderThumbnails(photos);
+  })
+  .catch((err) => {
+    showAlert(err.message);
+  });
+
+setPhotoUploadFormSubmit(closePhotoUploadForm);

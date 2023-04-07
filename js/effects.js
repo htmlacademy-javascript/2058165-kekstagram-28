@@ -41,7 +41,7 @@ const onEffectsChange = (evt) => {
   updateSlider();
 };
 
-const onUpdateSlider = () => {
+const onSliderUpdate = () => {
   const sliderValue = slider.noUiSlider.get();
   if (isDefaultEffect()) {
     imagePreview.style.filter = DEFAULT_EFFECT.style;
@@ -63,7 +63,7 @@ noUiSlider.create(slider, {
 hideSlider();
 
 effects.addEventListener('change', onEffectsChange);
-slider.noUiSlider.on('update', onUpdateSlider);
+slider.noUiSlider.on('update', onSliderUpdate);
 
 const resetEffects = () => {
   currentEffect = DEFAULT_EFFECT;
