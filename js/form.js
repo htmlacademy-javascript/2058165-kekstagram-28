@@ -2,6 +2,7 @@ import { isEscape } from './util.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
 import { resetPristine } from './validation-form.js';
+import { uploadPicture } from './upload-picture.js';
 
 const photoUploadForm = document.querySelector('.img-upload__form');
 const photoEditForm = photoUploadForm.querySelector('.img-upload__overlay');
@@ -13,6 +14,7 @@ const commentField = photoUploadForm.querySelector('.text__description');
 const openPhotoUploadForm = () => {
   photoEditForm.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  uploadPicture();
   cancelFormButton.addEventListener('click', onCancelFormButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
 };

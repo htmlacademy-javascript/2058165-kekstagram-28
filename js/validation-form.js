@@ -1,5 +1,5 @@
-import { sendData } from './api.js';
-import { showAlert } from './util.js';
+import { sendData, showSuccessMessageUpload, showErrorMessageUpload } from './api.js';
+import { closePhotoUploadForm } from './form.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -60,7 +60,7 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const setPhotoUploadFormSubmit = (onSuccess) => {
+const setPhotoUploadFormSubmit = () => {
   photoUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -68,9 +68,12 @@ const setPhotoUploadFormSubmit = (onSuccess) => {
     if (isValid) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(onSuccess)
-        .catch((err) => {
-          showAlert(err.message);
+        .then(() => {
+          showSuccessMessageUpload();
+          closePhotoUploadForm();
+        })
+        .catch(() => {
+          showErrorMessageUpload();
         })
         .finally(unblockSubmitButton);
     }
