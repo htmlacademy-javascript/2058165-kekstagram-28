@@ -1,6 +1,6 @@
-import { EFFECTS } from './effects-options.js';
+import { effectNameToOptions } from './effects-options.js';
 
-const DEFAULT_EFFECT = EFFECTS[0];
+const DEFAULT_EFFECT = effectNameToOptions.none;
 let currentEffect = DEFAULT_EFFECT;
 
 const sliderContainer = document.querySelector('.img-upload__effect-level');
@@ -30,7 +30,9 @@ const onEffectsChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
-  currentEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+
+  const effectName = evt.target.value;
+  currentEffect = effectNameToOptions[effectName];
   imagePreview.className = `effects__preview--${currentEffect.name}`;
 
   if (isDefaultEffect()) {
@@ -38,6 +40,7 @@ const onEffectsChange = (evt) => {
   } else {
     showSlider();
   }
+
   updateSlider();
 };
 
@@ -60,13 +63,21 @@ noUiSlider.create(slider, {
   step: DEFAULT_EFFECT.step,
   connect: 'lower',
 });
-hideSlider();
 
 effects.addEventListener('change', onEffectsChange);
 slider.noUiSlider.on('update', onSliderUpdate);
 
+hideSlider();
+
 const resetEffects = () => {
   currentEffect = DEFAULT_EFFECT;
+  updateSlider();
+
+  if (isDefaultEffect()) {
+    hideSlider();
+  } else {
+    showSlider();
+  }
   updateSlider();
 };
 

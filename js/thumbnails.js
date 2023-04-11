@@ -1,24 +1,28 @@
 import { createThumbnail } from './thumbnail.js';
-import { openBigPicture } from './big-picture.js';
 
 const pictureContainer = document.querySelector('.pictures');
 
-const renderThumbnails = (photos) => {
-  const pictureListFragment = document.createDocumentFragment();
-  photos.forEach((photo) => pictureListFragment.append(createThumbnail(photo)));
-  pictureContainer.append(pictureListFragment);
+let handleThumbnailClick = null;
 
-  pictureContainer.addEventListener('click', (evt) => {
-    const thumbnail = evt.target.closest('.picture');
-    if (thumbnail === null) {
-      return;
-    }
+const onPictureContainerClick = (evt) => {
+  const thumbnail = evt.target.closest('.picture');
+  if (thumbnail === null) {
+    return;
+  }
 
-    const dataId = Number(thumbnail.dataset.id);
-    const photo = photos.find(({id}) => id === dataId);
-
-    openBigPicture(photo);
-  });
+  handleThumbnailClick(Number(thumbnail.dataset.id));
 };
 
-export {renderThumbnails};
+const renderThumbnails = (photos) => {
+  const pictureListFragment = document.createDocumentFragment();
+  photos.forEach((photo) => pictureListFragment.appendChild(createThumbnail(photo)));
+  pictureContainer.appendChild(pictureListFragment);
+
+  pictureContainer.addEventListener('click', onPictureContainerClick);
+};
+
+const setThumbnailClickHandler = (callback) => {
+  handleThumbnailClick = callback;
+};
+
+export { renderThumbnails, setThumbnailClickHandler };
