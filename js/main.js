@@ -1,18 +1,26 @@
 import { closePhotoUploadForm } from './form.js';
-import { setPhotoUploadFormSubmit } from './validation-form.js';
-import { renderThumbnails } from './thumbnails.js';
+import { addPhotoUploadFormSubmit } from './validation-form.js';
+import { renderThumbnails, setThumbnailClickHandler } from './thumbnails.js';
 import { getData } from './api.js';
 import { showAlert } from './util.js';
 import { showFilters, setFilterChange } from './filter.js';
+import { openBigPicture } from './big-picture.js';
 
 getData()
   .then((photos) => {
+    const onThumbnailClick = (photoId) => {
+      const photo = photos.find(({id}) => id === photoId);
+
+      openBigPicture(photo);
+    };
+
     renderThumbnails(photos);
+    setThumbnailClickHandler(onThumbnailClick);
     setFilterChange(photos);
   })
   .catch((err) => {
     showAlert(err.message);
   });
 
-setPhotoUploadFormSubmit(closePhotoUploadForm);
+addPhotoUploadFormSubmit(closePhotoUploadForm);
 showFilters();

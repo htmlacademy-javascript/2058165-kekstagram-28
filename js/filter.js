@@ -1,5 +1,5 @@
 import { debounce } from './util.js';
-import { sortRandomly, sortByComments} from './util.js';
+import { sortRandomly, sortByComments, removeElement } from './util.js';
 import { renderThumbnails } from './thumbnails.js';
 
 const RANDOM_PICTURES_COUNT = 10;
@@ -23,24 +23,23 @@ const getFilteredPhoto = (photos) => {
     case filterDiscussed:
       return photos.slice().sort(sortByComments);
     default:
-      return photos;
+      return photos.slice();
   }
 };
 
-const onFilterClick = (evt, photos) => {
-  const images = document.querySelectorAll('.picture');
+const changeFilter = (evt, photos) => {
+  document.querySelectorAll('.picture').forEach(removeElement);
+
   currentFilter.classList.remove('img-filters__button--active');
   currentFilter = evt.target;
   currentFilter.classList.add('img-filters__button--active');
-  images.forEach((image) => {
-    image.remove();
-  });
+
   renderThumbnails(getFilteredPhoto(photos));
 };
 
 const setFilterChange = (photos) => {
   filtersContainer.addEventListener('click', debounce((evt) => {
-    onFilterClick(evt, photos);
+    changeFilter(evt, photos);
   }, RENDER_DELAY));
 };
 

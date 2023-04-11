@@ -432,6 +432,7 @@ main {
   vertical-align: middle;
 
   background-color: rgba(0, 0, 0, 0.6);
+  color: transparent;
   border: 0;
 }
 

@@ -1,52 +1,46 @@
-const EFFECTS = [
-  {
-    name: 'none',
+const effectNameToOptions = {
+  'none':  {
     style: 'none',
     min: 0,
     max: 100,
     step: 1,
     unit: '',
   },
-  {
-    name: 'chrome',
+  'chrome': {
     style: 'grayscale',
     min: 0,
     max: 1,
     step: 0.1,
     unit: '',
   },
-  {
-    name: 'sepia',
+  'sepia': {
     style: 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
     unit: '',
   },
-  {
-    name: 'marvin',
+  'marvin': {
     style: 'invert',
     min: 0,
     max: 100,
     step: 1,
     unit: '%',
   },
-  {
-    name: 'phobos',
+  'phobos': {
     style: 'blur',
     min: 0,
     max: 3,
     step: 0.1,
     unit: 'px',
   },
-  {
-    name: 'heat',
+  'heat': {
     style: 'brightness',
     min: 1,
     max: 3,
     step: 0.1,
     unit: '',
   },
-];
+};
 
-export { EFFECTS };
+export { effectNameToOptions };

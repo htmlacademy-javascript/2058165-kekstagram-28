@@ -18,16 +18,19 @@ let commentBlocks = [];
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
+
+  cancelButton.removeEventListener('click', onCancelButtonClick);
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown (evt) {
   if (evt.key.startsWith('Esc')) {
     evt.preventDefault();
     closeBigPicture();
   }
-};
+}
 
-const createBigPicture = (photo) => {
+const updateBigPicture = (photo) => {
   const { url, description, likes, comments } = photo;
   bigPictureImage.src = url;
   bigPictureLikesCount.textContent = likes;
@@ -69,22 +72,23 @@ const renderComments = () => {
 const onCommentsLoaderClick = () => renderComments();
 commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
-const openBigPicture = (photo) => {
-  bigPicture.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
-
+function onCancelButtonClick () {
   cancelButton.addEventListener('click', () => {
     closeBigPicture();
   });
+}
 
-  createBigPicture(photo);
+const openBigPicture = (photo) => {
+  updateBigPicture(photo);
   commentBlocks = photo.comments;
   commentsShown = 0;
   renderComments(photo.comments);
+
+  bigPicture.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  document.addEventListener('keydown', onDocumentKeydown);
+  cancelButton.addEventListener('click', onCancelButtonClick);
 };
 
-export {
-  openBigPicture,
-  closeBigPicture
-};
+export { openBigPicture, closeBigPicture };

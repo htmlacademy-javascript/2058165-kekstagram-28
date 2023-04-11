@@ -1,5 +1,6 @@
-import { sendData, showSuccessMessageUpload, showErrorMessageUpload } from './api.js';
+import { sendData } from './api.js';
 import { closePhotoUploadForm } from './form.js';
+import { openSuccessModal, openErrorModal } from './upload-message.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -60,7 +61,7 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const setPhotoUploadFormSubmit = () => {
+const addPhotoUploadFormSubmit = () => {
   photoUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -69,15 +70,15 @@ const setPhotoUploadFormSubmit = () => {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(() => {
-          showSuccessMessageUpload();
+          openSuccessModal();
           closePhotoUploadForm();
         })
         .catch(() => {
-          showErrorMessageUpload();
+          openErrorModal();
         })
         .finally(unblockSubmitButton);
     }
   });
 };
 
-export { setPhotoUploadFormSubmit, resetPristine };
+export { addPhotoUploadFormSubmit, resetPristine };
