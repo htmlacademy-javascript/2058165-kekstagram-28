@@ -1,19 +1,19 @@
-const pictureTemplate = document.querySelector('#picture')
+const pictureTemplateElement = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
 const createThumbnail = (photo) => {
   const { id, url, description, likes, comments } = photo;
-  const thumbnailItem = pictureTemplate.cloneNode(true);
+  const thumbnailElement = pictureTemplateElement.cloneNode(true);
 
-  const thumbnailItemPicture = thumbnailItem.querySelector('.picture__img');
-  thumbnailItem.dataset.id = id;
-  thumbnailItemPicture.src = url;
-  thumbnailItemPicture.alt = description;
-  thumbnailItem.querySelector('.picture__likes').textContent = likes;
-  thumbnailItem.querySelector('.picture__comments').textContent = comments.length;
+  const thumbnailPictureElement = thumbnailElement.querySelector('.picture__img');
+  thumbnailElement.dataset.id = id;
+  thumbnailPictureElement.src = url;
+  thumbnailPictureElement.alt = description;
+  thumbnailElement.querySelector('.picture__likes').textContent = likes;
+  thumbnailElement.querySelector('.picture__comments').textContent = comments.length;
 
-  return thumbnailItem;
+  return thumbnailElement;
 };
 
 export {createThumbnail};

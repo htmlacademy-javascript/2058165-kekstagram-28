@@ -3,36 +3,36 @@ import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
 import { resetPristine } from './validation-form.js';
 import { uploadPicture, resetPicture } from './upload-picture.js';
-import { getTypeMessage } from './upload-message.js';
+import { getTypeMessageElement } from './upload-message.js';
 
-const photoUploadForm = document.querySelector('.img-upload__form');
-const photoEditForm = photoUploadForm.querySelector('.img-upload__overlay');
-const cancelFormButton = photoUploadForm.querySelector('.img-upload__cancel');
-const photoUploadButton = photoUploadForm.querySelector('.img-upload__input');
-const hashtagField = photoUploadForm.querySelector('.text__hashtags');
-const commentField = photoUploadForm.querySelector('.text__description');
+const photoUploadFormElement = document.querySelector('.img-upload__form');
+const photoEditFormElement = photoUploadFormElement.querySelector('.img-upload__overlay');
+const cancelFormButtonElement = photoUploadFormElement.querySelector('.img-upload__cancel');
+const photoUploadButtonElement = photoUploadFormElement.querySelector('.img-upload__input');
+const hashtagFieldElement = photoUploadFormElement.querySelector('.text__hashtags');
+const commentFieldElement = photoUploadFormElement.querySelector('.text__description');
 
 const openPhotoUploadForm = () => {
   uploadPicture();
 
-  photoEditForm.classList.remove('hidden');
+  photoEditFormElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  cancelFormButton.addEventListener('click', onCancelFormButtonClick);
+  cancelFormButtonElement.addEventListener('click', onCancelFormButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const closePhotoUploadForm = () => {
-  photoEditForm.classList.add('hidden');
+  photoEditFormElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  photoUploadForm.reset();
+  photoUploadFormElement.reset();
   resetPristine();
   resetScale();
   resetEffects();
   resetPicture();
 
-  cancelFormButton.removeEventListener('click', onCancelFormButtonClick);
+  cancelFormButtonElement.removeEventListener('click', onCancelFormButtonClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
@@ -43,16 +43,16 @@ function onCancelFormButtonClick (evt) {
 
 const onPhotoUploadButtonChange = () => openPhotoUploadForm();
 
-const isTextFieldFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
+const isTextFieldFocused = () => document.activeElement === hashtagFieldElement || document.activeElement === commentFieldElement;
 
 function onDocumentKeydown (evt) {
-  if (isEscape(evt) && !isTextFieldFocused() && !getTypeMessage()) {
+  if (isEscape(evt) && !isTextFieldFocused() && !getTypeMessageElement()) {
     evt.preventDefault();
     closePhotoUploadForm();
   }
 }
 
-photoUploadButton.addEventListener('change', onPhotoUploadButtonChange);
-cancelFormButton.addEventListener('click', onCancelFormButtonClick);
+photoUploadButtonElement.addEventListener('change', onPhotoUploadButtonChange);
+cancelFormButtonElement.addEventListener('click', onCancelFormButtonClick);
 
 export { closePhotoUploadForm };

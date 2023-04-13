@@ -1,25 +1,25 @@
 const PICTURE_TYPES = ['jpg', 'jpeg', 'png'];
 
-const pictureUploadButton = document.querySelector('.img-upload__input');
-const picturePreview = document.querySelector('.img-upload__preview img');
-const previewEffects = document.querySelectorAll('.effects__preview');
+const pictureUploadButtonElement = document.querySelector('.img-upload__input');
+const picturePreviewElement = document.querySelector('.img-upload__preview img');
+const previewEffectElements = document.querySelectorAll('.effects__preview');
 
 const uploadPicture = () => {
-  const picture = pictureUploadButton.files[0];
+  const picture = pictureUploadButtonElement.files[0];
   const pictureName = picture.name.toLowerCase();
 
   const matches = PICTURE_TYPES.some((type) => pictureName.endsWith(type));
   if (matches) {
-    picturePreview.src = URL.createObjectURL(picture);
-    previewEffects.forEach((effect) => {
-      effect.style.backgroundImage = `url${picturePreview.src}`;
+    picturePreviewElement.src = URL.createObjectURL(picture);
+    previewEffectElements.forEach((effect) => {
+      effect.style.backgroundImage = `url${picturePreviewElement.src}`;
     });
   }
 };
 
 const resetPicture = () => {
-  URL.revokeObjectURL(picturePreview.src);
-  picturePreview.src = '';
+  URL.revokeObjectURL(picturePreviewElement.src);
+  picturePreviewElement.src = '';
 };
 
 export { uploadPicture, resetPicture };

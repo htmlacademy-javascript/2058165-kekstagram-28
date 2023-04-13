@@ -5,22 +5,22 @@ import { renderThumbnails } from './thumbnails.js';
 const RANDOM_PICTURES_COUNT = 10;
 const RENDER_DELAY = 500;
 
-const filtersContainer = document.querySelector('.img-filters');
-const filterDefault = filtersContainer.querySelector('#filter-default');
-const filterRandom = filtersContainer.querySelector('#filter-random');
-const filterDiscussed = filtersContainer.querySelector('#filter-discussed');
+const filtersContainerElement = document.querySelector('.img-filters');
+const filterDefaultElement = filtersContainerElement.querySelector('#filter-default');
+const filterRandomElement = filtersContainerElement.querySelector('#filter-random');
+const filterDiscussedElement = filtersContainerElement.querySelector('#filter-discussed');
 
-let currentFilter = filterDefault;
+let currentFilter = filterDefaultElement;
 
-const showFilters = () => filtersContainer.classList.remove('img-filters--inactive');
+const showFilters = () => filtersContainerElement.classList.remove('img-filters--inactive');
 
 const getFilteredPhoto = (photos) => {
   switch(currentFilter) {
-    case filterDefault:
+    case filterDefaultElement:
       return photos;
-    case filterRandom:
+    case filterRandomElement:
       return photos.slice().sort(sortRandomly).slice(0, RANDOM_PICTURES_COUNT);
-    case filterDiscussed:
+    case filterDiscussedElement:
       return photos.slice().sort(sortByComments);
     default:
       return photos.slice();
@@ -38,7 +38,7 @@ const changeFilter = (evt, photos) => {
 };
 
 const setFilterChange = (photos) => {
-  filtersContainer.addEventListener('click', debounce((evt) => {
+  filtersContainerElement.addEventListener('click', debounce((evt) => {
     changeFilter(evt, photos);
   }, RENDER_DELAY));
 };

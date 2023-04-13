@@ -1,12 +1,12 @@
 import { isEscape } from './util.js';
 
-const successModalTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorModalTemplate = document.querySelector('#error').content.querySelector('.error');
+const successModalTemplateElement = document.querySelector('#success').content.querySelector('.success');
+const errorModalTemplateElement = document.querySelector('#error').content.querySelector('.error');
 
-const getTypeMessage = () => document.querySelector('.success, .error');
+const getTypeMessageElement = () => document.querySelector('.success, .error');
 
 const closeModal = () => {
-  const message = getTypeMessage();
+  const message = getTypeMessageElement();
   if (message) {
     message.remove();
   }
@@ -16,10 +16,10 @@ const closeModal = () => {
 };
 
 const openSuccessModal = () => {
-  const success = successModalTemplate.cloneNode(true);
+  const success = successModalTemplateElement.cloneNode(true);
   document.body.appendChild(success);
-  const successButton = document.querySelector('.success__button');
-  successButton.addEventListener('click', () => {
+  const successButtonElement = success.querySelector('.success__button');
+  successButtonElement.addEventListener('click', () => {
     closeModal();
   });
 
@@ -28,10 +28,10 @@ const openSuccessModal = () => {
 };
 
 const openErrorModal = () => {
-  const error = errorModalTemplate.cloneNode(true);
+  const error = errorModalTemplateElement.cloneNode(true);
   document.body.appendChild(error);
-  const errorButton = document.querySelector('.error__button');
-  errorButton.addEventListener('click', () => {
+  const errorButtonElement = error.querySelector('.error__button');
+  errorButtonElement.addEventListener('click', () => {
     closeModal();
   });
 
@@ -40,17 +40,17 @@ const openErrorModal = () => {
 };
 
 function onModalEscKeydown (evt) {
-  if (isEscape && getTypeMessage()) {
+  if (isEscape(evt)) {
     evt.preventDefault();
     closeModal();
   }
 }
 
 function onModalOutsideClick (evt) {
-  const type = getTypeMessage();
-  if (isEscape && evt.target === type) {
+  const type = getTypeMessageElement();
+  if (evt.target === type) {
     closeModal();
   }
 }
 
-export { getTypeMessage, openSuccessModal, openErrorModal };
+export { getTypeMessageElement, openSuccessModal, openErrorModal };
