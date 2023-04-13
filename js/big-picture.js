@@ -9,10 +9,10 @@ const bigPictureDescriptionElement = bigPictureElement.querySelector('.social__c
 const bigPictureLikesCountElement = bigPictureElement.querySelector('.likes-count');
 const bigPictureCommentsCountElement = bigPictureElement.querySelector('.comments-count');
 
-const commentContainer = bigPictureElement.querySelector('.social__comments');
-const commentTemplate = bigPictureElement.querySelector('.social__comment').cloneNode(true);
-const commentCount = bigPictureElement.querySelector('.social__comment-count');
-const commentsLoader = bigPictureElement.querySelector('.comments-loader');
+const commentContainerElement = bigPictureElement.querySelector('.social__comments');
+const commentTemplateElement = bigPictureElement.querySelector('.social__comment').cloneNode(true);
+const commentCountElement = bigPictureElement.querySelector('.social__comment-count');
+const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
 
 let commentsShown = 0;
 let commentBlocks = [];
@@ -42,7 +42,7 @@ const updateBigPicture = (photo) => {
 
 const createComment = (comment) => {
   const { avatar, name, message } = comment;
-  const commentElement = commentTemplate.cloneNode(true);
+  const commentElement = commentTemplateElement.cloneNode(true);
   const pictureElement = commentElement.querySelector('.social__picture');
   pictureElement.src = avatar;
   pictureElement.alt = name;
@@ -54,10 +54,10 @@ const renderComments = () => {
   commentsShown += COMMENTS_IN_BLOCK;
 
   if (commentsShown >= commentBlocks.length) {
-    commentsLoader.classList.add('hidden');
+    commentsLoaderElement.classList.add('hidden');
     commentsShown = commentBlocks.length;
   } else {
-    commentsLoader.classList.remove('hidden');
+    commentsLoaderElement.classList.remove('hidden');
   }
 
   const commentFragment = document.createDocumentFragment();
@@ -66,13 +66,13 @@ const renderComments = () => {
     commentFragment.append(commentItem);
   }
 
-  commentContainer.replaceChildren();
-  commentContainer.append(commentFragment);
-  commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${commentBlocks.length}</span> комментариев`;
+  commentContainerElement.replaceChildren();
+  commentContainerElement.append(commentFragment);
+  commentCountElement.innerHTML = `${commentsShown} из <span class="comments-count">${commentBlocks.length}</span> комментариев`;
 };
 
 const onCommentsLoaderClick = () => renderComments();
-commentsLoader.addEventListener('click', onCommentsLoaderClick);
+commentsLoaderElement.addEventListener('click', onCommentsLoaderClick);
 
 function onCancelButtonClick () {
   cancelButtonElement.addEventListener('click', () => {
