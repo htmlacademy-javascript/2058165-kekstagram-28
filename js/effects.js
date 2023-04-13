@@ -3,20 +3,20 @@ import { effectNameToOptions } from './effects-options.js';
 const DEFAULT_EFFECT = effectNameToOptions.none;
 let currentEffect = DEFAULT_EFFECT;
 
-const sliderContainer = document.querySelector('.img-upload__effect-level');
-const slider = document.querySelector('.effect-level__slider');
-const imagePreview = document.querySelector('.img-upload__preview img');
-const effects = document.querySelector('.effects');
-const effectLevel = document.querySelector('.effect-level__value');
+const sliderContainerElement = document.querySelector('.img-upload__effect-level');
+const sliderElement = document.querySelector('.effect-level__slider');
+const imagePreviewElement = document.querySelector('.img-upload__preview img');
+const effectsElement = document.querySelector('.effects');
+const effectLevelElement = document.querySelector('.effect-level__value');
 
 const isDefaultEffect = () => currentEffect === DEFAULT_EFFECT;
 
-const showSlider = () => sliderContainer.classList.remove('hidden');
+const showSlider = () => sliderContainerElement.classList.remove('hidden');
 
-const hideSlider = () => sliderContainer.classList.add('hidden');
+const hideSlider = () => sliderContainerElement.classList.add('hidden');
 
 const updateSlider = () => {
-  slider.noUiSlider.updateOptions({
+  sliderElement.noUiSlider.updateOptions({
     range: {
       min: currentEffect.min,
       max: currentEffect.max,
@@ -33,7 +33,7 @@ const onEffectsChange = (evt) => {
 
   const effectName = evt.target.value;
   currentEffect = effectNameToOptions[effectName];
-  imagePreview.className = `effects__preview--${currentEffect.name}`;
+  imagePreviewElement.className = `effects__preview--${currentEffect.name}`;
 
   if (isDefaultEffect()) {
     hideSlider();
@@ -45,16 +45,16 @@ const onEffectsChange = (evt) => {
 };
 
 const onSliderUpdate = () => {
-  const sliderValue = slider.noUiSlider.get();
-  if (isDefaultEffect()) {
-    imagePreview.style.filter = DEFAULT_EFFECT.style;
-  } else {
-    imagePreview.style.filter = `${currentEffect.style}(${sliderValue}${currentEffect.unit})`;
-  }
-  effectLevel.value = sliderValue;
+  const sliderValue = sliderElement.noUiSlider.get();
+
+  imagePreviewElement.style.filter = isDefaultEffect()
+    ? DEFAULT_EFFECT.style
+    : `${currentEffect.style}(${sliderValue}${currentEffect.unit})`;
+
+  effectLevelElement.value = sliderValue;
 };
 
-noUiSlider.create(slider, {
+noUiSlider.create(sliderElement, {
   range: {
     min: DEFAULT_EFFECT.min,
     max: DEFAULT_EFFECT.max,
@@ -64,8 +64,8 @@ noUiSlider.create(slider, {
   connect: 'lower',
 });
 
-effects.addEventListener('change', onEffectsChange);
-slider.noUiSlider.on('update', onSliderUpdate);
+effectsElement.addEventListener('change', onEffectsChange);
+sliderElement.noUiSlider.on('update', onSliderUpdate);
 
 hideSlider();
 

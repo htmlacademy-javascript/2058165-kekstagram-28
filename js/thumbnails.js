@@ -1,6 +1,6 @@
 import { createThumbnail } from './thumbnail.js';
 
-const pictureContainer = document.querySelector('.pictures');
+const pictureContainerElement = document.querySelector('.pictures');
 
 let handleThumbnailClick = null;
 
@@ -16,9 +16,9 @@ const onPictureContainerClick = (evt) => {
 const renderThumbnails = (photos) => {
   const pictureListFragment = document.createDocumentFragment();
   photos.forEach((photo) => pictureListFragment.appendChild(createThumbnail(photo)));
-  pictureContainer.appendChild(pictureListFragment);
+  pictureContainerElement.appendChild(pictureListFragment);
 
-  pictureContainer.addEventListener('click', onPictureContainerClick);
+  pictureContainerElement.addEventListener('click', onPictureContainerClick);
 };
 
 const setThumbnailClickHandler = (callback) => {
